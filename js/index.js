@@ -15,18 +15,23 @@ $(document).ready(function() {
     cardDiv.innerHTML = ""
     for (var i = 0; i < data.length; i++) {
         try {
-            movie_name = data[i].original_title;
+            movie_name = data[i].original_title.slice(0,10);
             rating = data[i].vote_average;
             photos = data[i].poster_path;
 
             var card = document.createElement('div');
-            card.innerHTML = `<div class="card" style="width: 18rem;">
+            card.classList.add("card1");
+            card.classList.add("col-2");
+            // card.classList.add("col-xs-2");
+            // card.classList.add("col-md-2");
+            // card.classList.add("col-sm-2");
+            card.innerHTML = `
                                     <img src="http://image.tmdb.org/t/p/original${photos}" class="card-img-top" alt="...">
                                     <div class="card-body">
-                                    <h5 class="card-title">${movie_name}</h5>
+                                    <h6 class="card-title">${movie_name}</h6>
                                     <p class="card-text">Rating: ${rating}</p>
                                     </div>
-                                </div>`
+                                `
 
             cardDiv.appendChild(card);
         } catch (e) { console.log(e) }
@@ -34,37 +39,3 @@ $(document).ready(function() {
     });
     });
     
-// $.ajax(settings).done(function(response) {
-//     data = response.data;
-//     console.log(data);
-//     // var cardDiv = document.getElementById("cardDiv");
-//     // cardDiv.innerHTML = ""
-//     // for (var i = 0; i < data.length; i++) {
-//     //     try {
-//     //         // hname = data[i].name;
-//     //         // rating = data[i].rating;
-//     //         // address = data[i].location_string;
-//     //         // price_range = data[i].price;
-//     //         // photos = data[i].photo.images.original.url;
-
-//     //         // var card = document.createElement('div');
-//     //         // card.innerHTML = `<div class="card mb-3" style="margin-left: 5vw; margin-top:5vh ; max-width: 85vw; box-shadow: 4px 4px 4px 4px rgba(80, 79, 79, 0.753);">
-//     //         //                         <div class="row g-0">
-//     //         //                             <div class="col-md-4">
-//     //         //                                 <img src="${photos}" class="img-fluid rounded-start" style="height:50vh;">
-//     //         //                             </div>
-//     //         //                             <div class="col-md-8">
-//     //         //                                 <div class="card-body">
-//     //         //                                     <h5 class="card-title" id="cardid1">${hname}</h5>
-//     //         //                                     <p class="card-text">${price_range}</p>
-//     //         //                                     <p class="card-text">${address}</p>
-//     //         //                                     <p class="card-text"><small class="text-muted">${rating}</small></p>
-//     //         //                                 </div>
-//     //         //                             </div>
-//     //         //                         </div>
-//     //         //                     </div>`
-
-//     //         // cardDiv.appendChild(card);
-//     //     } catch (e) { console.log(e) }
-//     // }
-// });
