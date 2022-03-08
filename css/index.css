@@ -1,3 +1,6 @@
+body{
+    background-color: rgb(27, 27, 27);
+}
 #navigate{
     background-color: rgba(0, 0, 0, 0.274);
     backdrop-filter: blur(5px);
@@ -35,5 +38,12 @@
     display: none;
 }
 body::-webkit-scrollbar {
+    display: none;
+}
+
+#top_webSeries{
+    padding-left:2vw;
+}
+#top_webSeries::-webkit-scrollbar {
     display: none;
 }
