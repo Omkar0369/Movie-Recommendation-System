@@ -1,34 +1,34 @@
 // import './index';
-function movieSelected(id){
-    sessionStorage.setItem('movieId',id);
-    window.location='movie_data.html';
+function movieSelected(id) {
+    sessionStorage.setItem("movieId", id);
+    window.location = "movie_data.html";
     return false;
 }
-function getMovie(){
-    let movieId=sessionStorage.getItem('movieId');
+
+function getMovie() {
+    let movieId = sessionStorage.getItem("movieId");
     console.log(movieId);
-    $(document).ready(function(){
+    $(document).ready(function() {
         $.ajax({
-        url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`
-        
-        }).then(function(data){
+            url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`,
+        }).then(function(data) {
             console.log(data);
             // console.log(`https://api.themoviedb.org/3/movie/${movieId}?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`)
-            var currMovie=document.getElementById("movie-content");
-            currMovie.innerHTML="";
+            var currMovie = document.getElementById("movie-content");
+            currMovie.innerHTML = "";
 
             try {
                 movie_name = data.original_title;
                 rating = data.vote_average;
                 photos = data.poster_path;
-                description=data.overview;
-                time=data.runtime;
-                hrs=Math.floor(time/60);
-                min=time%60;
-                date=data.release_date;
-                genre=data.genres[0].name;
-                language=data.original_language;
-                video=data.url1;
+                description = data.overview;
+                time = data.runtime;
+                hrs = Math.floor(time / 60);
+                min = time % 60;
+                date = data.release_date;
+                genre = data.genres[0].name;
+                language = data.original_language;
+                video = data.url1;
                 // var card = document.createElement('div');
                 // card.classList.add("card1");
                 // card.classList.add("col-2");
@@ -46,20 +46,23 @@ function getMovie(){
                                             <div id="movie-video">
                                                 <video src="${video}"></video>
                                             </div>
-                                    `
+                                    `;
                 // currMovie.appendChild(currMovie);
-                
-            } catch (e) { console.log(e) }
+            } catch (e) {
+                console.log(e);
+            }
         });
     });
-    $(document).ready(function(){
+    $(document).ready(function() {
         $.ajax({
-            url:`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`
-        }).then(function(data){
+            url: `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`,
+        }).then(function(data) {
             console.log(data);
-            console.log(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`)
-            var currMovie=document.getElementById("movie-content");
-            currMovie.innerHTML="";
+            console.log(
+                `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`
+            );
+            var currMovie = document.getElementById("movie-content");
+            currMovie.innerHTML = "";
 
             try {
                 // movie_name = data.original_title.slice(0,10);
@@ -72,10 +75,12 @@ function getMovie(){
                 // date=data.release_date;
                 // genre=data.genres[0].name;
                 // language=data.original_language;
-                for(var i=0 ;i<results.length;i++){
-                    if(data.results[i].type=='Trailer'){
-                        video=data.results[i].name;
-                        console.log(i);
+                for (var i = 0; i < data.results.length; i++) {
+                    if (data.results[i].type == "Trailer") {
+                        video = data.results[i].name;
+                        key = data.results[i].key;
+                        video_link = `https://www.youtube.com/watch?v=${key}`;
+                        console.log(i, video, key, video_link);
                     }
                 }
                 // var card = document.createElement('div');
@@ -95,12 +100,13 @@ function getMovie(){
                                             <div id="movie-video">
                                                 <p>${video}</p>
                                             </div>
-                                    `
+                                    `;
                 // currMovie.appendChild(currMovie);
-                
-            } catch (e) { console.log(e) }
+            } catch (e) {
+                console.log(e);
+            }
         });
-    });  
+    });
 }
 getMovie();
 
