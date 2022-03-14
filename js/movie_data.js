@@ -10,7 +10,7 @@ function getMovie() {
     console.log(movieId);
     $(document).ready(function() {
         $.ajax({
-            url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`,
+            url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US&append_to_response=videos`,
         }).then(function(data) {
             console.log(data);
             // console.log(`https://api.themoviedb.org/3/movie/${movieId}?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`)
@@ -29,6 +29,14 @@ function getMovie() {
                 genre = data.genres[0].name;
                 language = data.original_language;
                 video = data.url1;
+                for (var i = 0; i < data.videos.results.length; i++) {
+                    if (data.videos.results[i].type == "Trailer") {
+                        video = data.videos.results[i].name;
+                        key = data.videos.results[i].key;
+                        video_link = `https://www.youtube.com/watch?v=${key}`;
+                        console.log(i, video, key, video_link);
+                    }
+                }
                 // var card = document.createElement('div');
                 // card.classList.add("card1");
                 // card.classList.add("col-2");
@@ -53,60 +61,60 @@ function getMovie() {
             }
         });
     });
-    $(document).ready(function() {
-        $.ajax({
-            url: `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`,
-        }).then(function(data) {
-            console.log(data);
-            console.log(
-                `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`
-            );
-            var currMovie = document.getElementById("movie-content");
-            currMovie.innerHTML = "";
+    // $(document).ready(function() {
+    //     $.ajax({
+    //         url: `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`,
+    //     }).then(function(data) {
+    //         console.log(data);
+    //         console.log(
+    //             `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`
+    //         );
+    //         var currMovie = document.getElementById("movie-content");
+    //         currMovie.innerHTML = "";
 
-            try {
-                // movie_name = data.original_title.slice(0,10);
-                // rating = data.vote_average;
-                // photos = data.poster_path;
-                // description=data.overview;
-                // time=data.runtime;
-                // hrs=Math.floor(time/60);
-                // min=time%60;
-                // date=data.release_date;
-                // genre=data.genres[0].name;
-                // language=data.original_language;
-                for (var i = 0; i < data.results.length; i++) {
-                    if (data.results[i].type == "Trailer") {
-                        video = data.results[i].name;
-                        key = data.results[i].key;
-                        video_link = `https://www.youtube.com/watch?v=${key}`;
-                        console.log(i, video, key, video_link);
-                    }
-                }
-                // var card = document.createElement('div');
-                // card.classList.add("card1");
-                // card.classList.add("col-2");
-                // card.classList.add("col-xs-2");
-                // card.classList.add("col-md-2");
-                // card.classList.add("col-sm-2");
-                currMovie.innerHTML = `     <div id="movie-data">
-                                                <div id="Img"><img src="http://image.tmdb.org/t/p/original${photos}" id="movieImg"/></div>
-                                                <div id="content">
-                                                    <h1 id="movieHead">${movie_name}</h1>
-                                                    <p style="color:rgba(255, 255, 255, 0.658);">${hrs} hrs ${min} min &#149; ${date} &#149; ${genre} &#149; ${language}</p>
-                                                    <p>${description}</p>
-                                                </div>
-                                            </div>
-                                            <div id="movie-video">
-                                                <p>${video}</p>
-                                            </div>
-                                    `;
-                // currMovie.appendChild(currMovie);
-            } catch (e) {
-                console.log(e);
-            }
-        });
-    });
+    //         try {
+    //             // movie_name = data.original_title.slice(0,10);
+    //             // rating = data.vote_average;
+    //             // photos = data.poster_path;
+    //             // description=data.overview;
+    //             // time=data.runtime;
+    //             // hrs=Math.floor(time/60);
+    //             // min=time%60;
+    //             // date=data.release_date;
+    //             // genre=data.genres[0].name;
+    //             // language=data.original_language;
+    //             for (var i = 0; i < data.results.length; i++) {
+    //                 if (data.results[i].type == "Trailer") {
+    //                     video = data.results[i].name;
+    //                     key = data.results[i].key;
+    //                     video_link = `https://www.youtube.com/watch?v=${key}`;
+    //                     console.log(i, video, key, video_link);
+    //                 }
+    //             }
+    //             // var card = document.createElement('div');
+    //             // card.classList.add("card1");
+    //             // card.classList.add("col-2");
+    //             // card.classList.add("col-xs-2");
+    //             // card.classList.add("col-md-2");
+    //             // card.classList.add("col-sm-2");
+    //             currMovie.innerHTML = `     <div id="movie-data">
+    //                                             <div id="Img"><img src="http://image.tmdb.org/t/p/original${photos}" id="movieImg"/></div>
+    //                                             <div id="content">
+    //                                                 <h1 id="movieHead">${movie_name}</h1>
+    //                                                 <p style="color:rgba(255, 255, 255, 0.658);">${hrs} hrs ${min} min &#149; ${date} &#149; ${genre} &#149; ${language}</p>
+    //                                                 <p>${description}</p>
+    //                                             </div>
+    //                                         </div>
+    //                                         <div id="movie-video">
+    //                                             <p>${video}</p>
+    //                                         </div>
+    //                                 `;
+    //             // currMovie.appendChild(currMovie);
+    //         } catch (e) {
+    //             console.log(e);
+    //         }
+    //     });
+    // });
 }
 getMovie();
 
