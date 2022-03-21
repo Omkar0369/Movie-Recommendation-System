@@ -28,7 +28,7 @@ $(document).ready(function() {
             // card.classList.add("col-xs-2");
             // card.classList.add("col-md-2");
             // card.classList.add("col-sm-2");
-            card.innerHTML = `      <a href="movie_data.html" onclick="movieSelected(${data[i].id})">
+            card.innerHTML = `      <a href="movie_data.html" onclick="movieSelected(${data[i].id})" style="text-decoration: none;">
                                     <img src="http://image.tmdb.org/t/p/original${photos}" class="card-img-top" alt="..." style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);">
                                     <div class="card-body">
                                     <h6 class="card-title" style="color:white;">${movie_name}</h6>
@@ -48,73 +48,49 @@ function movieSelected(id){
     window.location='movie_data.html';
     return false;
 }
-// function getMovie(){
-//     let movieId=sessionStorage.getItem('movieId');
-//     $(document).ready(function() {
-//         $.ajax({
-//         url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`
-//         }).then(function(data){
-//             data=data.result;
-//             console.log(data);
-//             var currMovie=document.getElementById("movie-content");
-//             currMovie.innerHTML="";
 
-//             try {
-//                 movie_name = data[i].original_title.slice(0,10);
-//                 rating = data[i].vote_average;
-//                 photos = data[i].poster_path;
-    
-//                 // var card = document.createElement('div');
-//                 // card.classList.add("card1");
-//                 // card.classList.add("col-2");
-//                 // card.classList.add("col-xs-2");
-//                 // card.classList.add("col-md-2");
-//                 // card.classList.add("col-sm-2");
-//                 currMovie.innerHTML = `      <img src="${photos}" />
-//                                         <h1>${movie_name}</h1>
-//                                     `
-//                 currMovie.appendChild(currMovie);
-                
-//             } catch (e) { console.log(e) }
-//         });
-//     });  
-// }
+
 //For Web Series
-// $(document).ready(function() {
-//     $.ajax({
-//     url: "https://api.themoviedb.org/3/tv/popular?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US&page=1"
-//     }).then(function(data) {
-//     data=data.results;
-//     console.log(data);
-//     var cardDiv = document.getElementById("top_webSeries");
-//     cardDiv.innerHTML = ""
+$(document).ready(function() {
+    $.ajax({
+    url: "https://api.themoviedb.org/3/tv/popular?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US&page=1"
+    }).then(function(data) {
+    data=data.results;
+    console.log(data);
+    var cardDiv = document.getElementById("top_webSeries");
+    cardDiv.innerHTML = ""
     
-//     for (var i = 0; i < data.length; i++) {
-//         try {
-//             web = data[i].name;
-//             rating = data[i].vote_average;
-//             photos = data[i].poster_path;
+    for (var i = 0; i < data.length; i++) {
+        try {
+            web = data[i].name;
+            rating = data[i].vote_average;
+            photos = data[i].poster_path;
 
-//             var card = document.createElement('div');
-//             card.classList.add("card1");
-//             card.classList.add("col-2");
-//             // card.classList.add("col-xs-2");
-//             // card.classList.add("col-md-2");
-//             // card.classList.add("col-sm-2");
-//             card.innerHTML = `      
-//                                     <img src="http://image.tmdb.org/t/p/original${photos}" class="card-img-top" alt="..." style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);">
-//                                     <div class="card-body">
-//                                     <h6 class="card-title" style="color:white;">${web}</h6>
-//                                     <p class="card-text" style="color:white;">Rating: ${rating}</p>
-//                                     </div>
-//                                 `
+            var card = document.createElement('div');
+            card.classList.add("card1");
+            card.classList.add("col-2");
+            // card.classList.add("col-xs-2");
+            // card.classList.add("col-md-2");
+            // card.classList.add("col-sm-2");
+            card.innerHTML = `      <a href="web_series.html" onclick="webseriesSelected(${data[i].id})" style="text-decoration: none;">
+                                    <img src="http://image.tmdb.org/t/p/original${photos}" class="card-img-top" alt="..." style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);">
+                                    <div class="card-body">
+                                    <h6 class="card-title" style="color:white;">${web}</h6>
+                                    <p class="card-text" style="color:white;">Rating: ${rating}</p>
+                                    </div>
+                                    </a>
+                                `
 
-//             cardDiv.appendChild(card);
-//         } catch (e) { console.log(e) }
-//     }
-//     });
-// });
-
+            cardDiv.appendChild(card);
+        } catch (e) { console.log(e) }
+    }
+    });
+});
+function webseriesSelected(id){
+    sessionStorage.setItem('webseriesId',id);
+    window.location='web_series.html';
+    return false;
+}
 // Language
 // $(document).ready(function() {
 //     $.ajax({

@@ -1,33 +1,29 @@
-// import './index';
-function movieSelected(id) {
-    sessionStorage.setItem("movieId", id);
-    window.location = "movie_data.html";
+function webseriesSelected(id) {
+    sessionStorage.setItem("webseriesId", id);
+    window.location = "web_series.html";
     return false;
 }
 
-function getMovie() {
-    let movieId = sessionStorage.getItem("movieId");
-    console.log(movieId);
+function getwebseries() {
+    let webseriesId = sessionStorage.getItem("webseriesId");
+    console.log(webseriesId);
     $(document).ready(function() {
         $.ajax({
-            url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US&append_to_response=videos,credits`,
+            url: `https://api.themoviedb.org/3/tv/${webseriesId}?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US&append_to_response=videos,credits`,
         }).then(function(data) {
             console.log(data);
             // console.log(`https://api.themoviedb.org/3/movie/${movieId}?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`)
-            var currMovie = document.getElementById("movie-content");
-            var currCast=document.getElementById("movie_cast");
+            var currwebseries = document.getElementById("webseries-content");
+            var currCast=document.getElementById("webseries_cast");
             currCast.innerHTML="";
-            currMovie.innerHTML = "";
+            currwebseries.innerHTML = "";
 
             try {
-                movie_name = data.original_title;
+                webseries_name = data.original_name;
                 rating = data.vote_average;
                 photos = data.poster_path;
                 description = data.overview;
-                time = data.runtime;
-                hrs = Math.floor(time / 60);
-                min = time % 60;
-                date = data.release_date;
+                date = data.first_air_date;
                 genre = data.genres[0].name;
                 language = data.original_language;
                 video = data.url1;
@@ -38,7 +34,6 @@ function getMovie() {
                         key = data.videos.results[i].key;
                         video_link = `https://www.youtube.com/embed/${key}?autoplay=1&mute=1&loop=forever`;
                         console.log(i, video, key, video_link);
-                        break;
                     }
                 }
                 // var card = document.createElement('div');
@@ -47,11 +42,11 @@ function getMovie() {
                 // card.classList.add("col-xs-2");
                 // card.classList.add("col-md-2");
                 // card.classList.add("col-sm-2");
-                currMovie.innerHTML = `     <div id="movie-data">
-                                                <div id="Img"><img src="http://image.tmdb.org/t/p/original${photos}" id="movieImg"/></div>
+                currwebseries.innerHTML = `     <div id="webseries-data">
+                                                <div id="Img"><img src="http://image.tmdb.org/t/p/original${photos}" id="webseriesImg"/></div>
                                                 <div id="content">
-                                                    <h1 id="movieHead">${movie_name}</h1>
-                                                    <p style="color:rgba(255, 255, 255, 0.658);">${hrs} hrs ${min} min &#149; ${date} &#149; ${genre} &#149; ${language}</p>
+                                                    <h1 id="webseriesHead">${webseries_name}</h1>
+                                                    <p style="color:rgba(255, 255, 255, 0.658);"> ${date} &#149; ${genre} &#149; ${language}</p>
                                                     <p>${description}</p>
                                                     <iframe src="${video_link}" id="trailer"></iframe>
                                                 </div>
@@ -87,6 +82,6 @@ function getMovie() {
         });
     });
 }
-getMovie();
+getwebseries();
 
 // url:`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`
