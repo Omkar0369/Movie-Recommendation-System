@@ -1,4 +1,6 @@
-// import './index';
+"use strict";
+const myApi = "db5b8bfc146e2c55ab2417c30811f11f";
+
 function movieSelected(id) {
     sessionStorage.setItem("movieId", id);
     window.location = "movie_data.html";
@@ -10,45 +12,42 @@ function getMovie() {
     console.log(movieId);
     $(document).ready(function() {
         $.ajax({
-            url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US&append_to_response=videos,credits`,
+            url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=${myApi}&language=en-US&append_to_response=videos,credits`,
         }).then(function(data) {
             console.log(data);
-            // console.log(`https://api.themoviedb.org/3/movie/${movieId}?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`)
-            var currMovie = document.getElementById("movie-content");
-            var currCast=document.getElementById("movie_cast");
-            currCast.innerHTML="";
+            const currMovie = document.getElementById("movie-content");
+            const currCast = document.getElementById("movie_cast");
+            currCast.innerHTML = "";
             currMovie.innerHTML = "";
 
             try {
-                movie_name = data.original_title;
-                rating = data.vote_average;
-                photos = data.poster_path;
-                description = data.overview;
-                time = data.runtime;
-                hrs = Math.floor(time / 60);
-                min = time % 60;
-                date = data.release_date;
-                genre = data.genres[0].name;
-                language = data.original_language;
-                video = data.url1;
-                production=data.production_companies[0].name;
-                for (var i = 0; i < data.videos.results.length; i++) {
+                const movie_name = data.original_title;
+                const rating = data.vote_average;
+                const photosId = data.poster_path;
+                let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+                if (photosId === null || photosId === undefined)
+                    photos = "../images/show_placeholder.png";
+                const description = data.overview;
+                const time = data.runtime;
+                const hrs = Math.floor(time / 60);
+                const min = time % 60;
+                const date = data.release_date;
+                const genre = data.genres[0].name;
+                const language = data.original_language;
+                let video = data.url1;
+                let video_link;
+                // const production = data.production_companies[0].name;
+                for (let i = 0; i < data.videos.results.length; i++) {
                     if (data.videos.results[i].type == "Trailer") {
                         video = data.videos.results[i].name;
-                        key = data.videos.results[i].key;
+                        const key = data.videos.results[i].key;
                         video_link = `https://www.youtube.com/embed/${key}?autoplay=1&mute=1&loop=forever`;
                         console.log(i, video, key, video_link);
                         break;
                     }
                 }
-                // var card = document.createElement('div');
-                // card.classList.add("card1");
-                // card.classList.add("col-2");
-                // card.classList.add("col-xs-2");
-                // card.classList.add("col-md-2");
-                // card.classList.add("col-sm-2");
                 currMovie.innerHTML = `     <div id="movie-data">
-                                                <div id="Img"><img src="http://image.tmdb.org/t/p/original${photos}" id="movieImg"/></div>
+                                                <div id="Img"><img src="${photos}" id="movieImg"/></div>
                                                 <div id="content">
                                                     <h1 id="movieHead">${movie_name}</h1>
                                                     <p style="color:rgba(255, 255, 255, 0.658);">${hrs} hrs ${min} min &#149; ${date} &#149; ${genre} &#149; ${language}</p>
@@ -57,30 +56,31 @@ function getMovie() {
                                                 </div>
                                             </div>
                                     `;
-                for (var i = 0; i < data.credits.cast.length; i++) {
+                for (let i = 0; i < data.credits.cast.length; i++) {
                     try {
-                            cast_name = data.credits.cast[i].name;
-                            character_name= data.credits.cast[i].character;
-                            photos = data.credits.cast[i].profile_path;
-                
-                            var card = document.createElement('div');
-                            card.classList.add("card1");
-                            card.classList.add("col-2");
-                            // card.classList.add("col-xs-2");
-                            // card.classList.add("col-md-2");
-                            // card.classList.add("col-sm-2");
-                            card.innerHTML = `  
-                                                    <img src="http://image.tmdb.org/t/p/original${photos}" class="card-img-top" alt="..." style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);width:10vw;">
+                        const cast_name = data.credits.cast[i].name;
+                        const character_name = data.credits.cast[i].character;
+                        const photosId = data.credits.cast[i].profile_path;
+                        let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+                        if (photosId === null || photosId === undefined)
+                            photos = "../images/show_placeholder.png";
+
+                        const card = document.createElement("div");
+                        card.classList.add("showCard");
+                        card.classList.add("col-2");
+                        card.innerHTML = `  
+                                                    <img src="${photos}" class="card-img-top" alt="..." style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);width:10vw;">
                                                     <div class="card-body">
                                                     <h6 class="card-title" style="color:white;">${cast_name}</h6>
                                                     <p class="card-text" style="color:white;">${character_name}</p>
                                                     </div>
                                                     
-                                                `
-                                currCast.appendChild(card);
-                        } catch (e) { console.log(e) }
+                                                `;
+                        currCast.appendChild(card);
+                    } catch (e) {
+                        console.log(e);
                     }
-                // currMovie.appendChild(currMovie);
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -88,5 +88,3 @@ function getMovie() {
     });
 }
 getMovie();
-
-// url:`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=db5b8bfc146e2c55ab2417c30811f11f&language=en-US`
