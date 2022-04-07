@@ -91,3 +91,16 @@ $(document).ready(function() {
         }
     });
 });
+
+const f = document.getElementById("form");
+const q = document.getElementById("search_bar");
+const google = "../search.html?search=";
+
+function submitted(event) {
+    event.preventDefault();
+    const url = google + q.value;
+    window.location.href = url;
+    console.log(url);
+}
+
+f.addEventListener("submit", submitted);
