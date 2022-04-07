@@ -55,7 +55,67 @@
         <!-- <input type="text" name="" id="search_bar" placeholder="Search for movies">
         <input type="button" value="Search" id="search_button"> -->
     </div>
-    <div class="search-content row" id="searchItems"></div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="filtermodal">
+      Filters
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Filter</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Language : 
+            <select name="Language">
+              <option value="EN">English</option>
+              <option value="ES">Spanish</option>
+              <option value="HI">Hindi</option>
+              <option value="FR">French</option>
+              <option value="JA">Japenese</option>
+              <option value="KO">Korean</option>
+            </select></p>
+            <p>Genre : 
+            <select name="Genre">
+              <option value="28">Action</option>
+              <option value="35">Comedy</option>
+              <option value="18">Drama</option>
+              <option value="10749">Romantic</option>
+              <option value="16">Animation</option>
+              <option value="80">Crime</option>
+              <option value="10751">Family</option>
+              <option value="27">Horror</option>
+              <option value="878">Science Fiction</option>
+            </select>
+          </p>
+          <p> Show Adult : 
+            Yes <input type="radio" id="yes" name="Adult-content" value="yes"/>
+            No <input type="radio" id="no" name="Adult-content" value="no"/>
+          </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Apply</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="sort">Sort By : 
+      <select name="SortBy">
+      <option value="">Popularity</option>
+      <option value="">Title(ascending)</option>
+      <option value="">Title(descending)</option>
+      <option value="">Rating(ascending)</option>
+      <option value="">Rating(descending)</option>
+      <option value="">Release Date</option>
+      <option value="">Vote count</option>
+    </select></div>
+    <div class="search-content row" id="searchItems">
+    
+    </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="./js/search.js"></script>

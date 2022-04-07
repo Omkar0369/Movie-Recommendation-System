@@ -35,3 +35,13 @@ body{
 .search-content{
     padding: 4rem;
 }
+#filtermodal{
+    margin-top: 2rem;
+    margin-left: 4rem;
+}
+#sort{
+    float: right;
+    margin-top: 2rem;
+    margin-right: 4rem;
+    color: white;
+}
