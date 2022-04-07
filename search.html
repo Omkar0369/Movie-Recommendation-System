@@ -56,12 +56,12 @@
         <input type="button" value="Search" id="search_button"> -->
     </div>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="filtermodal">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="filtermodal" >
       Filters
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -79,10 +79,10 @@
               <option value="KO">Korean</option>
             </select></p>
             <p>Genre : 
-            <select name="Genre">
+            <select id="Genre">
               <option value="28">Action</option>
-              <option value="35">Comedy</option>
-              <option value="18">Drama</option>
+              <option value="35" >Comedy</option>
+              <option value="18" >Drama</option>
               <option value="10749">Romantic</option>
               <option value="16">Animation</option>
               <option value="80">Crime</option>
@@ -105,7 +105,8 @@
     </div>
     <div id="sort">Sort By : 
       <select name="SortBy">
-      <option value="">Popularity</option>
+      <option value="">Popularity(ascending)</option>
+      <option value="">Popularity(descending)</option>
       <option value="">Title(ascending)</option>
       <option value="">Title(descending)</option>
       <option value="">Rating(ascending)</option>
