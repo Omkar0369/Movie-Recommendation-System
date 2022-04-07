@@ -20,7 +20,7 @@ body{
     border-radius: 2vmin;
     background-color: white;
 }
-#search_bar{
+#Search_bar{
     border: none;
     padding-left: 1vw;
     height: 7vh;
@@ -31,4 +31,7 @@ body{
     border: none;
     height: 7vh;
     width: 5vw;
+}
+.search-content{
+    padding: 4rem;
 }

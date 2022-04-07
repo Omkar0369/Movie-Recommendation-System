@@ -1,12 +1,12 @@
 "use strict";
-const myApi = "db5b8bfc146e2c55ab2417c30811f11f";
+const myApi1 = "db5b8bfc146e2c55ab2417c30811f11f";
 
 function getwebseries() {
     const webseriesId = sessionStorage.getItem("webseriesId");
     console.log(webseriesId);
     $(document).ready(function() {
         $.ajax({
-            url: `https://api.themoviedb.org/3/tv/${webseriesId}?api_key=${myApi}&language=en-US&append_to_response=videos,credits`,
+            url: `https://api.themoviedb.org/3/tv/${webseriesId}?api_key=${myApi1}&language=en-US&append_to_response=videos,credits`,
         }).then(function(data) {
             console.log(data);
             const currwebseries = document.getElementById("webseries-content");
