@@ -101,6 +101,7 @@ function submitted(event) {
     const url = google + q.value;
     window.location.href = url;
     console.log(url);
+    document.getElementById("search_bar").value=q.value;
 }
 
 f.addEventListener("submit", submitted);
