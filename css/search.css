@@ -1,47 +1,47 @@
-body{
-    background-color: rgb(27, 27, 27);
+body {
+  background-color: rgb(27, 27, 27);
 }
-#navigate{
-    background-color: rgba(0, 0, 0, 0.274);
-    backdrop-filter: blur(5px);
+#navigate {
+  background-color: rgba(0, 0, 0, 0.274);
+  backdrop-filter: blur(5px);
 }
-#top{
-    background-color: rgba(0, 0, 0, 0.048);
-    backdrop-filter: blur(5px);
-    height: 40vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#top {
+  background-color: rgba(0, 0, 0, 0.048);
+  backdrop-filter: blur(5px);
+  height: 40vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-#search_section{
-    height: 5vh;
-    width: fit-content;
-    border-radius: 2vmin;
-    background-color: white;
+#search_section {
+  height: 5vh;
+  width: fit-content;
+  border-radius: 2vmin;
+  background-color: white;
 }
-#Search_bar{
-    border: none;
-    padding-left: 1vw;
-    height: 7vh;
-    width: 40vw;
-    font-size: 20;
+#Search_bar {
+  border: none;
+  padding-left: 1vw;
+  height: 7vh;
+  width: 40vw;
+  font-size: 20;
 }
-#search_button{
-    border: none;
-    height: 7vh;
-    width: 5vw;
+#search_button {
+  border: none;
+  height: 7vh;
+  width: 5vw;
 }
-.search-content{
-    padding: 4rem;
+.search-content {
+  padding: 4rem;
 }
-#filtermodal{
-    margin-top: 2rem;
-    margin-left: 4rem;
+#filtermodal {
+  margin-top: 2rem;
+  margin-left: 4rem;
 }
-#sort{
-    float: right;
-    margin-top: 2rem;
-    margin-right: 4rem;
-    color: white;
+#sort {
+  float: right;
+  margin-top: 2rem;
+  margin-right: 4rem;
+  color: white;
 }

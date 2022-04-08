@@ -1,38 +1,37 @@
-#navigate{
-    background-color: rgba(0, 0, 0, 0.274);
-    backdrop-filter: blur(5px);
+#navigate {
+  background-color: rgba(0, 0, 0, 0.274);
+  backdrop-filter: blur(5px);
 }
-#movie-content div #movieImg{
-    width: 25vw;
+#movie-content div #movieImg {
+  width: 25vw;
 }
-#movie-content #movie-data{
-    display: flex;
-    padding: 1rem;
+#movie-content #movie-data {
+  display: flex;
+  padding: 1rem;
 }
-#movie-content #movie-data #Img{
-    flex: 0.40;
-    /* background-color: azure; */
+#movie-content #movie-data #Img {
+  flex: 0.4;
+  /* background-color: azure; */
 }
-#movie-content #movie-data #content{
-    width: 75%;
-    flex: 1;
-    color: white;
+#movie-content #movie-data #content {
+  width: 75%;
+  flex: 1;
+  color: white;
 }
-#movie-content #movie-video{
-    color: white;
+#movie-content #movie-video {
+  color: white;
 }
-#movie-content #movie-data #content #trailer{
-    width: 40vw;
-    height: 25vw;
-    
+#movie-content #movie-data #content #trailer {
+  width: 40vw;
+  height: 25vw;
 }
-#movie_cast{
-    margin-top: 2vh;
-    padding-left:2vw;
+#movie_cast {
+  margin-top: 2vh;
+  padding-left: 2vw;
 }
 #movie_cast::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
-body::-webkit-scrollbar{
-    display: none;
+body::-webkit-scrollbar {
+  display: none;
 }

@@ -1,38 +1,37 @@
-#navigate{
-    background-color: rgba(0, 0, 0, 0.274);
-    backdrop-filter: blur(5px);
+#navigate {
+  background-color: rgba(0, 0, 0, 0.274);
+  backdrop-filter: blur(5px);
 }
-#webseries-content div #webseriesImg{
-    width: 25vw;
+#webseries-content div #webseriesImg {
+  width: 25vw;
 }
-#webseries-content #webseries-data{
-    display: flex;
-    padding: 1rem;
+#webseries-content #webseries-data {
+  display: flex;
+  padding: 1rem;
 }
-#webseries-content #webseries-data #Img{
-    flex: 0.40;
-    /* background-color: azure; */
+#webseries-content #webseries-data #Img {
+  flex: 0.4;
+  /* background-color: azure; */
 }
-#webseries-content #webseries-data #content{
-    width: 75%;
-    flex: 1;
-    color: white;
+#webseries-content #webseries-data #content {
+  width: 75%;
+  flex: 1;
+  color: white;
 }
-#webseries-content #webseries-video{
-    color: white;
+#webseries-content #webseries-video {
+  color: white;
 }
-#webseries-content #webseries-data #content #trailer{
-    width: 40vw;
-    height: 25vw;
-    
+#webseries-content #webseries-data #content #trailer {
+  width: 40vw;
+  height: 25vw;
 }
-#webseries_cast{
-    margin-top: 2vh;
-    padding-left:2vw;
+#webseries_cast {
+  margin-top: 2vh;
+  padding-left: 2vw;
 }
 #webseries_cast::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
-body::-webkit-scrollbar{
-    display: none;
+body::-webkit-scrollbar {
+  display: none;
 }
