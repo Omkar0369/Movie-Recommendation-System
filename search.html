@@ -127,7 +127,7 @@
               </select>
             </p>
             <p>
-              Show Adult : Yes
+              Show Adult Content : Yes
               <input type="radio" id="true" name="Adult-content" value="true" />
               No
               <input
@@ -160,15 +160,17 @@
     </div>
     <div id="sort">
       Sort By :
-      <select name="SortBy">
-        <option value="">Popularity(ascending)</option>
-        <option value="">Popularity(descending)</option>
-        <option value="">Title(ascending)</option>
-        <option value="">Title(descending)</option>
-        <option value="">Rating(ascending)</option>
-        <option value="">Rating(descending)</option>
-        <option value="">Release Date</option>
-        <option value="">Vote count</option>
+      <select id="SortBy" onchange="sort_result(this.value)">
+        <option value="popularity.desc">Popularity (descending)</option>
+        <option value="popularity.asc">Popularity (ascending)</option>
+        <option value="original_title.desc">Title (descending)</option>
+        <option value="original_title.asc">Title (ascending)</option>
+        <option value="vote_average.desc">Rating (descending)</option>
+        <option value="vote_average.asc">Rating (ascending)</option>
+        <!-- <option value="release_date.desc">Release Date (descending)</option>
+        <option value="release_date.asc">Release Date (ascending)</option> -->
+        <option value="vote_count.desc">Vote count (descending)</option>
+        <option value="vote_count.asc">Vote count (ascending)</option>
       </select>
     </div>
     <div class="search-content row" id="searchItems"></div>

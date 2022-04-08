@@ -172,33 +172,28 @@ function getwebseries() {
   });
 }
 
-function search_result(value, genre, adult, language) {
+function search_result(value, genre, adult, language, sortby) {
   let search_url = `https://api.themoviedb.org/3/search/multi?api_key=${myApi}&language=en-US&page=1&query=${value}`;
+  // if (sortby !== null) {
+  //   search_url += `&sort_by=${sortby}`;
+  // }
+  console.log(search_url);
+  console.log(value, genre, adult, language, sortby);
   $(document).ready(function () {
     $.ajax({
       url: search_url,
     }).then(function (data) {
       data = data.results;
       console.log(data);
-      console.log(value);
+      if (sortby !== null) {
+        data = sort_data(data, sortby);
+      }
       const cardDiv = document.getElementById("searchItems");
       cardDiv.innerHTML = "";
 
       for (let i = 0; i < data.length; i++) {
         try {
           if (data[i].media_type === "movie") {
-            // console.log(
-            //   data[i].original_language.toLowerCase(),
-            //   typeof data[i].original_language.toLowerCase()
-            // );
-            // console.log(
-            //   language?.toLowerCase(),
-            //   typeof language?.toLowerCase()
-            // );
-            // console.log(
-            //   data[i].original_language.toLowerCase() ===
-            //     language?.toLowerCase()
-            // );
             if (genre !== null && !data[i].genre_ids.includes(genre)) {
               console.log(i, data[i].id, "genre filtered");
               continue;
@@ -348,4 +343,82 @@ function filter_result() {
   var myModalEl = document.getElementById("exampleModal");
   var modal = bootstrap.Modal.getInstance(myModalEl);
   modal.hide();
+}
+
+function sort_result(sortby) {
+  let value = params.search;
+  let genre =
+    document.getElementById("Genre").value !== "null"
+      ? Number(document.getElementById("Genre").value)
+      : null;
+  let language =
+    document.getElementById("Language").value !== "null"
+      ? document.getElementById("Language").value
+      : null;
+  let adult = true
+    ? document.querySelector('input[name="Adult-content"]:checked').value ===
+      "true"
+    : false;
+  console.log(value, genre, language, adult, sortby);
+  search_result(value, genre, adult, language, sortby);
+}
+
+function sort_data(data, sortby) {
+  let sort_by_split = sortby.split(".");
+  if (sort_by_split[0] == "popularity" && sort_by_split[1] == "desc") {
+    data = data;
+  } else if (sort_by_split[0] == "popularity" && sort_by_split[1] == "asc") {
+    data = data.reverse();
+  } else if (
+    sort_by_split[0] == "original_title" &&
+    sort_by_split[1] == "asc"
+  ) {
+    data = data.sort((a, b) => {
+      if (a.original_title > b.original_title) return 1;
+      if (a.original_title < b.original_title) return -1;
+      if (a.original_title == b.original_title) return 0;
+    });
+  } else if (
+    sort_by_split[0] == "original_title" &&
+    sort_by_split[1] == "desc"
+  ) {
+    data = data.sort((a, b) => {
+      if (a.original_title < b.original_title) return 1;
+      if (a.original_title > b.original_title) return -1;
+      if (a.original_title == b.original_title) return 0;
+    });
+  } else if (sort_by_split[0] == "vote_average" && sort_by_split[1] == "asc") {
+    data = data.sort((a, b) => {
+      if (a.vote_average > b.vote_average) return 1;
+      if (a.vote_average < b.vote_average) return -1;
+      if (a.vote_average == b.vote_average) return 0;
+    });
+  } else if (sort_by_split[0] == "vote_average" && sort_by_split[1] == "desc") {
+    data = data.sort((a, b) => {
+      if (a.vote_average < b.vote_average) return 1;
+      if (a.vote_average > b.vote_average) return -1;
+      if (a.vote_average == b.vote_average) return 0;
+    });
+    // } else if (sort_by_split[0] == "release_date" && sort_by_split[1] == "asc") {
+    //   if (a.release_date > b.release_date) return 1;
+    //   if (a.release_date < b.release_date) return -1;
+    //   if (a.release_date == b.release_date) return 0;
+    // } else if (sort_by_split[0] == "release_date" && sort_by_split[1] == "desc") {
+    //   if (a.release_date < b.release_date) return 1;
+    //   if (a.release_date > b.release_date) return -1;
+    //   if (a.release_date == b.release_date) return 0;
+  } else if (sort_by_split[0] == "vote_count" && sort_by_split[1] == "asc") {
+    data = data.sort((a, b) => {
+      if (a.vote_count > b.vote_count) return 1;
+      if (a.vote_count < b.vote_count) return -1;
+      if (a.vote_count == b.vote_count) return 0;
+    });
+  } else if (sort_by_split[0] == "vote_count" && sort_by_split[1] == "desc") {
+    data = data.sort((a, b) => {
+      if (a.vote_count < b.vote_count) return 1;
+      if (a.vote_count > b.vote_count) return -1;
+      if (a.vote_count == b.vote_count) return 0;
+    });
+  }
+  return data;
 }
