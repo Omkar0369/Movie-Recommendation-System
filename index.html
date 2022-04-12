@@ -46,7 +46,10 @@
               <a class="nav-link" href="#" style="color: white">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" style="color: white">SignIn/Login</a>
+              <button class="nav-link" href="#" style="color: white; background-color: rgba(0, 0, 0, 0.2); border: none;" id="login" data-bs-toggle="modal" data-bs-target="#exampleModal">SignIn/Login</button>
+            </li>
+            <li class="nav-item">
+            <button class="nav-link" href="#" style="color: white; background-color: rgba(0, 0, 0, 0.2); visibility: hidden; border: none; float: right; display: flex;" id="logout" >Logout</button>
             </li>
           </ul>
         </div>
@@ -86,6 +89,111 @@
       class="row flex-nowrap overflow-auto"
       style="background-color: rgba(255, 255, 255, 0)"
     ></div>
+    <!-- Modal signup -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Signup</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="">
+              <p>Email Id</p>
+              <input type="email" name="" id="email" placeholder="Enter Email address">
+              <p>Password</p>
+              <input type="password" name="" id="pwd" placeholder="Enter password">
+            </form>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Already Registered?</a>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <a
+              type="button"
+              class="btn btn-primary"
+              id="enter_data"
+              data-bs-toggle="modal"
+              href="#loginModal"
+            >
+              Signup
+          </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal login -->
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="">
+              <p>Email Id</p>
+              <input type="email" name="" id="loginemail" placeholder="Enter Email address">
+              <p>Password</p>
+              <input type="password" name="" id="loginpwd" placeholder="Enter password">
+            </form>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">create account</a>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="LoggedIn"
+            >
+              Login
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast align-items-center text-white bg-success border-0 top-0 start-50 translate-middle-x" role="alert" aria-live="assertive" aria-atomic="true" id="toast" >
+      <div class="d-flex">
+        <div class="toast-body">
+          Hello, world! This is a toast message.
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
   </body>
   <script
     src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -100,4 +208,5 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"
   ></script>
+  <script src="/js/data_base.js" type="module"></script>
 </html>
