@@ -298,15 +298,6 @@ function search_result(value, genre, adult, language, sortby) {
 function filter_result() {
   let value = params.search;
 
-  // console.log(
-  //   document.getElementById("Genre").value,
-  //   typeof document.getElementById("Genre").value,
-  //   document.getElementById("Language").value,
-  //   typeof document.getElementById("Language").value,
-  //   document.querySelector('input[name="Adult-content"]:checked').value,
-  //   typeof document.querySelector('input[name="Adult-content"]:checked').value
-  // );
-
   let genre =
     document.getElementById("Genre").value !== "null"
       ? Number(document.getElementById("Genre").value)
@@ -316,31 +307,13 @@ function filter_result() {
     document.getElementById("Language").value !== "null"
       ? document.getElementById("Language").value
       : null;
-  // let language = document.getElementById("Language").value
-  //   ? document.getElementById("Language").value !== "null"
-  //   : null;
-
-  // console.log(
-  //   document.querySelector('input[name="Adult-content"]:checked').value
-  // );
   let adult = true
     ? document.querySelector('input[name="Adult-content"]:checked').value ===
       "true"
     : false;
 
-  // console.log(
-  //   value,
-  //   typeof value,
-  //   genre,
-  //   typeof genre,
-  //   language,
-  //   typeof language,
-  //   adult,
-  //   typeof adult
-  // );
-
-  search_result(value, genre, adult, language);
-  var myModalEl = document.getElementById("exampleModal");
+  search_result(value, genre, adult, language, null);
+  var myModalEl = document.getElementById("filterModal");
   var modal = bootstrap.Modal.getInstance(myModalEl);
   modal.hide();
 }
