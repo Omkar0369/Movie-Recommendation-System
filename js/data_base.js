@@ -15,6 +15,7 @@ import {
   setDoc,
   increment,
   updateDoc,
+  arrayUnion,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
 // Your web app's Firebase configuration
@@ -31,6 +32,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+let userDocRef;
 
 // Sign Out if already Signed in
 // signOut(auth)
@@ -47,7 +49,7 @@ const db = getFirestore(app);
 //   });
 
 // Signup Code
-document.getElementById("signupButton").addEventListener("click", function () {
+document.getElementById("signupButton")?.addEventListener("click", function () {
   const email = document.getElementById("email").value;
   const pwd = document.getElementById("pwd").value;
   console.log(email);
@@ -70,7 +72,7 @@ document.getElementById("signupButton").addEventListener("click", function () {
 });
 
 // Login Code
-document.getElementById("LoggedIn").addEventListener("click", function () {
+document.getElementById("LoggedIn")?.addEventListener("click", function () {
   let email = document.getElementById("loginemail").value;
   let pwd = document.getElementById("loginpwd").value;
   console.log(email);
@@ -83,6 +85,7 @@ document.getElementById("LoggedIn").addEventListener("click", function () {
         auth.currentUser.uid,
         auth.currentUser.email
       );
+      const userDocRef = doc(db, "users1", auth.currentUser.uid);
       var myModalEl = document.getElementById("loginModal");
       var modal = bootstrap.Modal.getInstance(myModalEl);
       modal.hide();
@@ -102,7 +105,7 @@ document.getElementById("LoggedIn").addEventListener("click", function () {
 });
 
 // Logout Code
-document.getElementById("logout").addEventListener("click", function () {
+document.getElementById("logout")?.addEventListener("click", function () {
   signOut(auth)
     .then(() => {
       // Sign-out successful.
@@ -117,22 +120,22 @@ document.getElementById("logout").addEventListener("click", function () {
     });
 });
 
-// Auth Change Code
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    const uid = user.uid;
-    console.log(uid);
-    const userDocRef = doc(db, "users1", uid);
-    insertDate(userDocRef);
-    selectData(userDocRef);
-    updateDataGenre(userDocRef, "comedy");
-    selectData(userDocRef);
-    // ...
-  } else {
-    // User is signed out
-    // ...
-  }
-});
+// // Auth Change Code
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     const uid = user.uid;
+//     console.log(uid);
+//     const userDocRef = doc(db, "users1", uid);
+//     insertDate(userDocRef);
+//     selectData(userDocRef);
+//     updateDataGenre("comedy");
+//     selectData(userDocRef);
+//     // ...
+//   } else {
+//     // User is signed out
+//     // ...
+//   }
+// });
 
 async function insertDate(userDocRef) {
   try {
@@ -140,16 +143,36 @@ async function insertDate(userDocRef) {
       email: auth.currentUser.email,
       uid: auth.currentUser.uid,
       genre: {
-        action: 0,
-        comedy: 0,
-        drama: 0,
-        romantic: 0,
-        animation: 0,
-        crime: 0,
-        family: 0,
-        horror: 0,
-        scienceFiction: 0,
+        "Action & Adventure": 0,
+        Animation: 0,
+        Comedy: 0,
+        Crime: 0,
+        Documentary: 0,
+        Drama: 0,
+        Family: 0,
+        Kids: 0,
+        Mystery: 0,
+        News: 0,
+        Reality: 0,
+        "Sci-Fi & Fantasy": 0,
+        Soap: 0,
+        Talk: 0,
+        "War & Politics": 0,
+        Western: 0,
+        Action: 0,
+        Adventure: 0,
+        Fantasy: 0,
+        History: 0,
+        Horror: 0,
+        Music: 0,
+        Romance: 0,
+        "Science Fiction": 0,
+        "TV Movie": 0,
+        Thriller: 0,
+        War: 0,
       },
+      history: [],
+      searchHistory: [],
     });
   } catch (e) {
     console.error("Error adding document: ", e);
@@ -167,9 +190,50 @@ async function selectData(userDocRef) {
   }
 }
 
-async function updateDataGenre(userDocRef, genre) {
-  const incrementValue = increment(1);
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    localStorage.setItem("userUid", user.uid);
+  } else {
+    console.log("Plese Login First");
+  }
+});
+
+async function updateDataGenre(genre) {
+  let userUid = localStorage.getItem("userUid");
+  const userDocRef = doc(db, "users1", userUid);
+  console.log("retrievedObject: ", userUid);
+  console.log(userDocRef);
   await updateDoc(userDocRef, {
-    [`genre.${genre}`]: incrementValue,
+    [`genre.${genre}`]: increment(1),
   });
 }
+
+async function updateDataHistory(showId) {
+  let userUid = localStorage.getItem("userUid");
+  const userDocRef = doc(db, "users1", userUid);
+  console.log("retrievedObject: ", userUid);
+  console.log(userDocRef);
+  await updateDoc(userDocRef, {
+    history: arrayUnion(showId),
+  });
+}
+
+async function updateDataSearchHistory(searchQuery) {
+  let userUid = localStorage.getItem("userUid");
+  const userDocRef = doc(db, "users1", userUid);
+  console.log("retrievedObject: ", userUid);
+  console.log(userDocRef);
+  await updateDoc(userDocRef, {
+    searchHistory: arrayUnion(searchQuery),
+  });
+}
+
+export {
+  auth,
+  db,
+  doc,
+  updateDataGenre,
+  updateDataHistory,
+  updateDataSearchHistory,
+  userDocRef,
+};

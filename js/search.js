@@ -1,6 +1,8 @@
 "use strict";
+import { search_result, filter_result } from "./utillity.js";
 // const myApi3 = "db5b8bfc146e2c55ab2417c30811f11f";
 
+window.filter_result = filter_result;
 const t = document.getElementById("form");
 const p = document.getElementById("Search_bar");
 const google1 = "../search.html?search=";
@@ -17,6 +19,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
   get: (searchParams, prop) => searchParams.get(prop),
 });
 let value = params.search;
+window.params = params;
 
 // function search_result(value, genre, adult, language) {
 //   let search_url = `https://api.themoviedb.org/3/search/multi?api_key=${myApi3}&language=en-US&page=1&query=${value}`;

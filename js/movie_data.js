@@ -1,4 +1,5 @@
 "use strict";
+import { getMovie } from "./utillity.js";
 // const myApi2 = "db5b8bfc146e2c55ab2417c30811f11f";
 
 // function movieSelected(id) {

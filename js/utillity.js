@@ -1,3 +1,13 @@
+import {
+  auth,
+  doc,
+  updateDataGenre,
+  db,
+  userDocRef,
+  updateDataSearchHistory,
+  updateDataHistory,
+} from "./data_base.js";
+
 const myApi = "db5b8bfc146e2c55ab2417c30811f11f";
 
 function movieSelected(id) {
@@ -11,9 +21,12 @@ function webseriesSelected(id) {
   window.location = "web_series.html";
   return false;
 }
+window.movieSelected = movieSelected;
+window.webseriesSelected = webseriesSelected;
 
 function getMovie() {
   let movieId = sessionStorage.getItem("movieId");
+  updateDataHistory(movieId);
   console.log(movieId);
   $(document).ready(function () {
     $.ajax({
@@ -37,7 +50,13 @@ function getMovie() {
         const hrs = Math.floor(time / 60);
         const min = time % 60;
         const date = data.release_date;
-        const genre = data.genres[0].name;
+        let genre = data.genres;
+        if (genre != null) {
+          for (let g of genre) {
+            updateDataGenre(genreIdName[g["id"]]);
+          }
+        }
+        genre = data.genres[0].name;
         const language = data.original_language;
         let video = data.url1;
         let video_link;
@@ -95,6 +114,7 @@ function getMovie() {
 
 function getwebseries() {
   const webseriesId = sessionStorage.getItem("webseriesId");
+  updateDataHistory(webseriesId);
   console.log(webseriesId);
   $(document).ready(function () {
     $.ajax({
@@ -115,7 +135,13 @@ function getwebseries() {
           photos = "../images/show_placeholder.png";
         const description = data.overview;
         const date = data.first_air_date;
-        const genre = data.genres[0].name;
+        let genre = data.genres;
+        if (genre != null) {
+          for (let g of genre) {
+            updateDataGenre(genreIdName[g["id"]]);
+          }
+        }
+        genre = data.genres[0].name;
         const language = data.original_language;
         let video;
         let key;
@@ -171,14 +197,47 @@ function getwebseries() {
     });
   });
 }
+const genreIdName = {
+  10759: "Action & Adventure",
+  16: "Animation",
+  35: "Comedy",
+  80: "Crime",
+  99: "Documentary",
+  18: "Drama",
+  10751: "Family",
+  10762: "Kids",
+  9648: "Mystery",
+  10763: "News",
+  10764: "Reality",
+  10765: "Sci-Fi & Fantasy",
+  10766: "Soap",
+  10767: "Talk",
+  10768: "War & Politics",
+  37: "Western",
+  28: "Action",
+  12: "Adventure",
+  14: "Fantasy",
+  36: "History",
+  27: "Horror",
+  10402: "Music",
+  10749: "Romance",
+  878: "Science Fiction",
+  10770: "TV Movie",
+  53: "Thriller",
+  10752: "War",
+};
 
 function search_result(value, genre, adult, language, sortby) {
+  updateDataSearchHistory(value);
   let search_url = `https://api.themoviedb.org/3/search/multi?api_key=${myApi}&language=en-US&page=1&query=${value}`;
   // if (sortby !== null) {
   //   search_url += `&sort_by=${sortby}`;
   // }
   console.log(search_url);
   console.log(value, genre, adult, language, sortby);
+  if (genre != null) {
+    updateDataGenre(genreIdName[genre]);
+  }
   $(document).ready(function () {
     $.ajax({
       url: search_url,
@@ -277,7 +336,7 @@ function search_result(value, genre, adult, language, sortby) {
             const card = document.createElement("div");
             card.classList.add("showCard");
             card.classList.add("col-3");
-            card.innerHTML = `      <a href="webseries_name_series.html" onclick="webseries_nameseriesSelected(${data[i].id})" style="text-decoration: none;">
+            card.innerHTML = `      <a href="web_series.html" onclick="webseriesSelected(${data[i].id})" style="text-decoration: none;">
                                           <img src="${photos}" class="card-img-top" alt="..." style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);">
                                           <div class="card-body">
                                           <h6 class="card-title" style="color:white;">${webseries_name}</h6>
@@ -395,3 +454,16 @@ function sort_data(data, sortby) {
   }
   return data;
 }
+
+export {
+  myApi,
+  movieSelected,
+  webseriesSelected,
+  getMovie,
+  getwebseries,
+  genreIdName,
+  search_result,
+  filter_result,
+  sort_result,
+  sort_data,
+};
