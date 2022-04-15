@@ -45,3 +45,9 @@ body {
   margin-right: 4rem;
   color: white;
 }
+#login {
+  position: absolute;
+}
+#logout {
+  position: absolute;
+}

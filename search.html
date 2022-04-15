@@ -50,7 +50,37 @@
               <a class="nav-link" href="#" style="color: white">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" style="color: white">SignIn/Login</a>
+              <button
+                class="nav-link"
+                href="#"
+                style="
+                  color: white;
+                  background-color: rgba(0, 0, 0, 0.2);
+                  border: none;
+                "
+                id="login"
+                data-bs-toggle="modal"
+                data-bs-target="#loginModal"
+              >
+                SignIn/Login
+              </button>
+            </li>
+            <li class="nav-item">
+              <button
+                class="nav-link"
+                href="#"
+                style="
+                  color: white;
+                  background-color: rgba(0, 0, 0, 0.2);
+                  visibility: hidden;
+                  border: none;
+                  float: right;
+                  display: flex;
+                "
+                id="logout"
+              >
+                Logout
+              </button>
             </li>
           </ul>
         </div>

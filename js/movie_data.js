@@ -88,4 +88,11 @@ import { getMovie } from "./utillity.js";
 //     });
 //   });
 // }
+if (localStorage.getItem("login") == 1) {
+  document.getElementById("login").style.visibility = "hidden";
+  document.getElementById("logout").style.visibility = "visible";
+} else {
+  document.getElementById("login").style.visibility = "visible";
+  document.getElementById("logout").style.visibility = "hidden";
+}
 getMovie();

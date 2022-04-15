@@ -7,7 +7,7 @@ body {
 }
 #top {
   background-image: url("/images/background_img.jpg");
-  height: 90vh;
+  height: 100vh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -31,13 +31,13 @@ body {
   height: 7vh;
   width: 5vw;
 }
+body::-webkit-scrollbar {
+  display: none;
+}
 #top_movies {
   padding-left: 2vw;
 }
 #top_movies::-webkit-scrollbar {
-  display: none;
-}
-body::-webkit-scrollbar {
   display: none;
 }
 
@@ -46,4 +46,17 @@ body::-webkit-scrollbar {
 }
 #top_webSeries::-webkit-scrollbar {
   display: none;
+}
+
+#recommend {
+  padding-left: 2vw;
+}
+#recommend::-webkit-scrollbar {
+  display: none;
+}
+#login {
+  position: absolute;
+}
+#logout {
+  position: absolute;
 }

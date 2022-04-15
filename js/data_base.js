@@ -17,6 +17,7 @@ import {
   updateDoc,
   arrayUnion,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+import { homeRecommend } from "./utillity.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -109,8 +110,8 @@ document.getElementById("logout")?.addEventListener("click", function () {
   signOut(auth)
     .then(() => {
       // Sign-out successful.
+      localStorage.removeItem("userUid");
       console.log("signout successful");
-      console.log(auth.currentUser);
       document.getElementById("login").style.visibility = "visible";
       document.getElementById("logout").style.visibility = "hidden";
     })
@@ -184,6 +185,7 @@ async function selectData(userDocRef) {
 
   if (docSnap.exists()) {
     console.log("Document data:", docSnap.data());
+    return docSnap.data();
   } else {
     // doc.data() will be undefined in this case
     console.log("No such document!");
@@ -193,7 +195,10 @@ async function selectData(userDocRef) {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     localStorage.setItem("userUid", user.uid);
+    localStorage.setItem("login", 1);
+    homeRecommend();
   } else {
+    localStorage.setItem("login", 0);
     console.log("Plese Login First");
   }
 });
@@ -232,6 +237,7 @@ export {
   auth,
   db,
   doc,
+  selectData,
   updateDataGenre,
   updateDataHistory,
   updateDataSearchHistory,

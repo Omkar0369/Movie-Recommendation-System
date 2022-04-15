@@ -20,7 +20,13 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 });
 let value = params.search;
 window.params = params;
-
+if (localStorage.getItem("login") == 1) {
+  document.getElementById("login").style.visibility = "hidden";
+  document.getElementById("logout").style.visibility = "visible";
+} else {
+  document.getElementById("login").style.visibility = "visible";
+  document.getElementById("logout").style.visibility = "hidden";
+}
 // function search_result(value, genre, adult, language) {
 //   let search_url = `https://api.themoviedb.org/3/search/multi?api_key=${myApi3}&language=en-US&page=1&query=${value}`;
 //   $(document).ready(function () {

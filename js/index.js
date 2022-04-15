@@ -1,5 +1,12 @@
 "use strict";
-import { myApi } from "./utillity.js";
+import {
+  myApi,
+  genreNameId,
+  homeMovieList,
+  homeWebList,
+  homeRecommend,
+} from "./utillity.js";
+import { selectData, doc, db } from "./data_base.js";
 // const myApi = "db5b8bfc146e2c55ab2417c30811f11f";
 
 // function movieSelected(id) {
@@ -14,6 +21,14 @@ import { myApi } from "./utillity.js";
 //   return false;
 // }
 
+if (localStorage.getItem("login") == 1) {
+  document.getElementById("login").style.visibility = "hidden";
+  document.getElementById("logout").style.visibility = "visible";
+} else {
+  document.getElementById("login").style.visibility = "visible";
+  document.getElementById("logout").style.visibility = "hidden";
+}
+
 //For Movies
 $(document).ready(function () {
   $.ajax({
@@ -26,26 +41,7 @@ $(document).ready(function () {
 
     for (let i = 0; i < data.length; i++) {
       try {
-        const movie_name = data[i].original_title;
-        const rating = data[i].vote_average;
-        if (rating === 0) continue;
-        const photosId = data[i].poster_path;
-        let photos = `http://image.tmdb.org/t/p/original${photosId}`;
-        if (photosId === null || photosId === undefined)
-          photos = "../images/show_placeholder.png";
-
-        const card = document.createElement("div");
-        card.classList.add("showCard");
-        card.classList.add("col-2");
-        card.innerHTML = `  <a href="movie_data.html" onclick="movieSelected(${data[i].id})" style="text-decoration: none;">
-                              <img src="${photos}" class="card-img-top" alt="..." style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);">
-                              <div class="card-body">
-                                  <h6 class="card-title" style="color:white;">${movie_name}</h6>
-                                  <p class="card-text" style="color:white;">Rating: ${rating}</p>
-                              </div>
-                            </a>
-                                `;
-        cardDiv.appendChild(card);
+        homeMovieList(data[i], cardDiv);
       } catch (e) {
         console.log(e);
       }
@@ -65,27 +61,7 @@ $(document).ready(function () {
 
     for (let i = 0; i < data.length; i++) {
       try {
-        const web = data[i].name;
-        const rating = data[i].vote_average;
-        if (rating === 0) continue;
-        const photosId = data[i].poster_path;
-        let photos = `http://image.tmdb.org/t/p/original${photosId}`;
-        if (photosId === null || photosId === undefined)
-          photos = "../images/show_placeholder.png";
-
-        const card = document.createElement("div");
-        card.classList.add("showCard");
-        card.classList.add("col-2");
-        card.innerHTML = `      <a href="web_series.html" onclick="webseriesSelected(${data[i].id})" style="text-decoration: none;">
-                                    <img src="${photos}" class="card-img-top" alt="..." style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);">
-                                    <div class="card-body">
-                                    <h6 class="card-title" style="color:white;">${web}</h6>
-                                    <p class="card-text" style="color:white;">Rating: ${rating}</p>
-                                    </div>
-                                    </a>
-                                `;
-
-        cardDiv.appendChild(card);
+        homeWebList(data[i], cardDiv);
       } catch (e) {
         console.log(e);
       }

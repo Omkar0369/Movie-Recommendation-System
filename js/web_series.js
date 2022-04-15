@@ -1,5 +1,6 @@
 "use strict";
 import { getwebseries } from "./utillity.js";
+
 // const myApi1 = "db5b8bfc146e2c55ab2417c30811f11f";
 
 // function getwebseries() {
@@ -80,4 +81,12 @@ import { getwebseries } from "./utillity.js";
 //     });
 //   });
 // }
+
+if (localStorage.getItem("login") == 1) {
+  document.getElementById("login").style.visibility = "hidden";
+  document.getElementById("logout").style.visibility = "visible";
+} else {
+  document.getElementById("login").style.visibility = "visible";
+  document.getElementById("logout").style.visibility = "hidden";
+}
 getwebseries();

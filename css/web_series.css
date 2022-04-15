@@ -35,3 +35,9 @@
 body::-webkit-scrollbar {
   display: none;
 }
+#login {
+  position: absolute;
+}
+#logout {
+  position: absolute;
+}

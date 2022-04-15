@@ -6,6 +6,7 @@ import {
   userDocRef,
   updateDataSearchHistory,
   updateDataHistory,
+  selectData,
 } from "./data_base.js";
 
 const myApi = "db5b8bfc146e2c55ab2417c30811f11f";
@@ -15,7 +16,6 @@ function movieSelected(id) {
   window.location = "movie_data.html";
   return false;
 }
-
 function webseriesSelected(id) {
   sessionStorage.setItem("webseriesId", id);
   window.location = "web_series.html";
@@ -23,14 +23,13 @@ function webseriesSelected(id) {
 }
 window.movieSelected = movieSelected;
 window.webseriesSelected = webseriesSelected;
-
 function getMovie() {
   let movieId = sessionStorage.getItem("movieId");
   updateDataHistory(movieId);
   console.log(movieId);
   $(document).ready(function () {
     $.ajax({
-      url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=${myApi}&language=en-US&append_to_response=videos,credits`,
+      url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=${myApi}&language=en-US&append_to_response=videos,credits,watch/providers`,
     }).then(function (data) {
       console.log(data);
       const currMovie = document.getElementById("movie-content");
@@ -111,7 +110,6 @@ function getMovie() {
     });
   });
 }
-
 function getwebseries() {
   const webseriesId = sessionStorage.getItem("webseriesId");
   updateDataHistory(webseriesId);
@@ -197,6 +195,122 @@ function getwebseries() {
     });
   });
 }
+function homeMovieList(data, cardDiv) {
+  const movie_name = data.original_title;
+  const rating = data.vote_average;
+  if (rating === 0) return;
+  const photosId = data.poster_path;
+  let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+  if (photosId === null || photosId === undefined)
+    photos = "../images/show_placeholder.png";
+
+  const card = document.createElement("div");
+  card.classList.add("showCard");
+  card.classList.add("col-2");
+  card.innerHTML = `  <a href="movie_data.html" onclick="movieSelected(${data.id})" style="text-decoration: none;">
+                              <img src="${photos}" class="card-img-top" alt="..." style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);">
+                              <div class="card-body">
+                                  <h6 class="card-title" style="color:white;">${movie_name}</h6>
+                                  <p class="card-text" style="color:white;">Rating: ${rating}</p>
+                              </div>
+                            </a>
+                                `;
+  cardDiv.appendChild(card);
+}
+function homeWebList(data, cardDiv) {
+  const web = data.name;
+  const rating = data.vote_average;
+  if (rating === 0) return;
+  const photosId = data.poster_path;
+  let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+  if (photosId === null || photosId === undefined)
+    photos = "../images/show_placeholder.png";
+
+  const card = document.createElement("div");
+  card.classList.add("showCard");
+  card.classList.add("col-2");
+  card.innerHTML = `      <a href="web_series.html" onclick="webseriesSelected(${data.id})" style="text-decoration: none;">
+                                    <img src="${photos}" class="card-img-top" alt="..." style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);">
+                                    <div class="card-body">
+                                    <h6 class="card-title" style="color:white;">${web}</h6>
+                                    <p class="card-text" style="color:white;">Rating: ${rating}</p>
+                                    </div>
+                                    </a>
+                                `;
+
+  cardDiv.appendChild(card);
+}
+//For Recommend
+function homeRecommend() {
+  let userUid = localStorage.getItem("userUid");
+  const userDocRef = doc(db, "users1", userUid);
+  console.log(userUid);
+  (async () => {
+    let data = await selectData(userDocRef);
+    console.log(data);
+    if (data == null) {
+      const cardDiv = document.getElementById("recommend");
+      cardDiv.innerHTML = "";
+      const card = document.createElement("div");
+      card.innerHTML = `<p>Please Login To Get Recommendation</p>`;
+      cardDiv.appendChild(card);
+      return;
+    }
+    let sorted = Object.entries(data.genre).sort(([, a], [, b]) => b - a);
+    console.log(sorted);
+    const cardDiv = document.getElementById("recommend");
+    cardDiv.innerHTML = "";
+    if (sorted[0][1] == 0) {
+      const card = document.createElement("div");
+      card.innerHTML = `
+      <p style="color: white;font-size: x-large;margin-top: 2vh;margin-left: 35vw;">
+        Please Search To Get Recommendation
+      </p>`;
+      cardDiv.appendChild(card);
+      return;
+    }
+    console.log(
+      `${genreNameId[sorted[0][0]]}, ${genreNameId[sorted[1][0]]}, ${
+        genreNameId[sorted[2][0]]
+      }`
+    );
+
+    $(document).ready(function () {
+      $.ajax({
+        url: `https://api.themoviedb.org/3/discover/movie?api_key=${myApi}&language=en-US&sort_by=popularity.desc&with_genres=
+      ${genreNameId[sorted[0][0]]}| ${genreNameId[sorted[1][0]]}| 
+      ${genreNameId[sorted[2][0]]}`,
+      }).then(function (data) {
+        console.log(data);
+        data = data.results;
+        for (let i = 0; i < data.length; i++) {
+          try {
+            homeMovieList(data[i], cardDiv);
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      });
+    });
+    $(document).ready(function () {
+      $.ajax({
+        url: `https://api.themoviedb.org/3/discover/tv?api_key=${myApi}&language=en-US&sort_by=popularity.desc&with_genres=
+      ${genreNameId[sorted[0][0]]}, ${genreNameId[sorted[1][0]]}, 
+      ${genreNameId[sorted[2][0]]}`,
+      }).then(function (data) {
+        console.log(data);
+        data = data.results;
+        for (let i = 0; i < data.length; i++) {
+          try {
+            homeWebList(data[i], cardDiv);
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      });
+    });
+  })();
+}
 const genreIdName = {
   10759: "Action & Adventure",
   16: "Animation",
@@ -225,6 +339,35 @@ const genreIdName = {
   10770: "TV Movie",
   53: "Thriller",
   10752: "War",
+};
+const genreNameId = {
+  "Action & Adventure": 10759,
+  Animation: 16,
+  Comedy: 35,
+  Crime: 80,
+  Documentary: 99,
+  Drama: 18,
+  Family: 10751,
+  Kids: 10762,
+  Mystery: 9648,
+  News: 10763,
+  Reality: 10764,
+  "Sci-Fi & Fantasy": 10765,
+  Soap: 10766,
+  Talk: 10767,
+  "War & Politics": 10768,
+  Western: 37,
+  Action: 28,
+  Adventure: 12,
+  Fantasy: 14,
+  History: 36,
+  Horror: 27,
+  Music: 10402,
+  Romance: 10749,
+  "Science Fiction": 878,
+  "TV Movie": 10770,
+  Thriller: 53,
+  War: 10752,
 };
 
 function search_result(value, genre, adult, language, sortby) {
@@ -461,7 +604,11 @@ export {
   webseriesSelected,
   getMovie,
   getwebseries,
+  homeMovieList,
+  homeWebList,
+  homeRecommend,
   genreIdName,
+  genreNameId,
   search_result,
   filter_result,
   sort_result,
