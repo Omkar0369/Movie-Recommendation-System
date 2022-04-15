@@ -34,8 +34,10 @@ function getMovie() {
       console.log(data);
       const currMovie = document.getElementById("movie-content");
       const currCast = document.getElementById("movie_cast");
+      const watchProviderDiv = document.getElementById("movie_provider");
       currCast.innerHTML = "";
       currMovie.innerHTML = "";
+      watchProviderDiv.innerHTML = "";
 
       try {
         const movie_name = data.title;
@@ -69,15 +71,18 @@ function getMovie() {
             break;
           }
         }
-        currMovie.innerHTML = `     <div id="movie-data">
-                                                  <div id="Img"><img src="${photos}" id="movieImg"/></div>
-                                                  <div id="content">
-                                                      <h1 id="movieHead">${movie_name}</h1>
-                                                      <p style="color:rgba(255, 255, 255, 0.658);">${hrs} hrs ${min} min &#149; ${date} &#149; ${genre} &#149; ${language}</p>
-                                                      <p>${description}</p>
-                                                      <iframe src="${video_link}" id="trailer"></iframe>
-                                                  </div>
-                                              </div>
+        currMovie.innerHTML = `     
+        <div id="movie-data">
+          <div id="Img">
+            <img src="${photos}" id="movieImg"/>
+          </div>
+          <div id="content">
+              <h1 id="movieHead">${movie_name}</h1>
+              <p style="color:rgba(255, 255, 255, 0.658);">${hrs} hrs ${min} min &#149; ${date} &#149; ${genre} &#149; ${language}</p>
+              <p>${description}</p>
+              <iframe src="${video_link}" id="trailer"></iframe>
+          </div>
+        </div>
                                       `;
         for (let i = 0; i < data.credits.cast.length; i++) {
           try {
@@ -92,17 +97,57 @@ function getMovie() {
             card.classList.add("showCard");
             card.classList.add("col-2");
             card.innerHTML = `  
-                                                      <img src="${photos}" class="card-img-top" alt="..." style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);width:10vw;">
-                                                      <div class="card-body">
-                                                      <h6 class="card-title" style="color:white;">${cast_name}</h6>
-                                                      <p class="card-text" style="color:white;">${character_name}</p>
-                                                      </div>
-                                                      
-                                                  `;
+            <img src="${photos}" class="card-img-top" alt="..." style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);width:10vw;">
+            <div class="card-body">
+              <h6 class="card-title" style="color:white;">${cast_name}</h6>
+              <p class="card-text" style="color:white;">${character_name}</p>
+            </div>
+            `;
             currCast.appendChild(card);
           } catch (e) {
             console.log(e);
           }
+        }
+        const watchProvider = data["watch/providers"].results["IN"];
+        console.log(watchProvider);
+        if (watchProvider == undefined) {
+          console.log("Not available in your Region");
+        }
+        function arrayUnique(array) {
+          var a = array.concat();
+          for (var i = 0; i < a.length; ++i) {
+            for (var j = i + 1; j < a.length; ++j) {
+              if (a[i].provider_name == a[j].provider_name) a.splice(j--, 1);
+            }
+          }
+          return a;
+        }
+        let allWatchProvider = [];
+        if (watchProvider.buy != undefined)
+          allWatchProvider = arrayUnique(
+            allWatchProvider.concat(watchProvider.buy)
+          );
+        if (watchProvider.rent != undefined)
+          allWatchProvider = arrayUnique(
+            allWatchProvider.concat(watchProvider.rent)
+          );
+        if (watchProvider.flatrate != undefined)
+          allWatchProvider = arrayUnique(
+            allWatchProvider.concat(watchProvider.flatrate)
+          );
+        console.log(allWatchProvider);
+
+        for (let i = 0; i < allWatchProvider.length; i++) {
+          let card = document.createElement("div");
+          card.classList.add("showCard");
+          card.classList.add("col-1");
+          card.innerHTML = `
+          <img src="http://image.tmdb.org/t/p/original${allWatchProvider[i].logo_path}" class="card-img-top" alt="..."  style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);width:8vw;">
+          <div class="card-body">
+            <h5 class="card-title" style="color:white;overflow-wrap: break-word;">${allWatchProvider[i].provider_name}</h5>
+          </div>
+          `;
+          watchProviderDiv.appendChild(card);
         }
       } catch (e) {
         console.log(e);
@@ -116,13 +161,15 @@ function getwebseries() {
   console.log(webseriesId);
   $(document).ready(function () {
     $.ajax({
-      url: `https://api.themoviedb.org/3/tv/${webseriesId}?api_key=${myApi}&language=en-US&append_to_response=videos,credits`,
+      url: `https://api.themoviedb.org/3/tv/${webseriesId}?api_key=${myApi}&language=en-US&append_to_response=videos,credits,watch/providers`,
     }).then(function (data) {
       console.log(data);
       const currwebseries = document.getElementById("webseries-content");
       const currCast = document.getElementById("webseries_cast");
+      const watchProviderDiv = document.getElementById("web_provider");
       currCast.innerHTML = "";
       currwebseries.innerHTML = "";
+      watchProviderDiv.innerHTML = "";
 
       try {
         const webseries_name = data.original_name;
@@ -188,6 +235,48 @@ function getwebseries() {
           } catch (e) {
             console.log(e);
           }
+        }
+        const watchProvider = data["watch/providers"].results["IN"];
+        console.log(watchProvider);
+        if (watchProvider == undefined) {
+          console.log("Not available in your Region");
+          return;
+        }
+        function arrayUnique(array) {
+          var a = array.concat();
+          for (var i = 0; i < a.length; ++i) {
+            for (var j = i + 1; j < a.length; ++j) {
+              if (a[i].provider_name == a[j].provider_name) a.splice(j--, 1);
+            }
+          }
+          return a;
+        }
+        let allWatchProvider = [];
+        if (watchProvider.buy != undefined)
+          allWatchProvider = arrayUnique(
+            allWatchProvider.concat(watchProvider.buy)
+          );
+        if (watchProvider.rent != undefined)
+          allWatchProvider = arrayUnique(
+            allWatchProvider.concat(watchProvider.rent)
+          );
+        if (watchProvider.flatrate != undefined)
+          allWatchProvider = arrayUnique(
+            allWatchProvider.concat(watchProvider.flatrate)
+          );
+        console.log(allWatchProvider);
+
+        for (let i = 0; i < allWatchProvider.length; i++) {
+          let card = document.createElement("div");
+          card.classList.add("showCard");
+          card.classList.add("col-1");
+          card.innerHTML = `
+          <img src="http://image.tmdb.org/t/p/original${allWatchProvider[i].logo_path}" class="card-img-top" alt="..."  style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);width:8vw;">
+          <div class="card-body">
+            <h5 class="card-title" style="color:white;overflow-wrap: break-word;">${allWatchProvider[i].provider_name}</h5>
+          </div>
+          `;
+          watchProviderDiv.appendChild(card);
         }
       } catch (e) {
         console.log(e);
@@ -259,6 +348,7 @@ function homeRecommend() {
     let sorted = Object.entries(data.genre).sort(([, a], [, b]) => b - a);
     console.log(sorted);
     const cardDiv = document.getElementById("recommend");
+    if (cardDiv == null) return;
     cardDiv.innerHTML = "";
     if (sorted[0][1] == 0) {
       const card = document.createElement("div");

@@ -32,6 +32,13 @@
 #webseries_cast::-webkit-scrollbar {
   display: none;
 }
+#web_provider {
+  margin-top: 2vh;
+  padding-left: 2vw;
+}
+#web_provider::-webkit-scrollbar {
+  display: none;
+}
 body::-webkit-scrollbar {
   display: none;
 }

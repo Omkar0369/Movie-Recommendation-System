@@ -32,6 +32,13 @@
 #movie_cast::-webkit-scrollbar {
   display: none;
 }
+#movie_provider {
+  margin-top: 2vh;
+  padding-left: 2vw;
+}
+#movie_provider::-webkit-scrollbar {
+  display: none;
+}
 body::-webkit-scrollbar {
   display: none;
 }
