@@ -20,7 +20,7 @@ import { getwebseries } from "./utillity.js";
 //         const webseries_name = data.original_name;
 //         const rating = data.vote_average;
 //         const photosId = data.poster_path;
-//         let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+//         let photos = `https://image.tmdb.org/t/p/original${photosId}`;
 //         if (photosId === null || photosId === undefined)
 //           photos = "../images/show_placeholder.png";
 //         const description = data.overview;
@@ -57,7 +57,7 @@ import { getwebseries } from "./utillity.js";
 //             const cast_name = data.credits.cast[i].name;
 //             const character_name = data.credits.cast[i].character;
 //             const photosId = data.credits.cast[i].profile_path;
-//             let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+//             let photos = `https://image.tmdb.org/t/p/original${photosId}`;
 //             if (photosId === null || photosId === undefined)
 //               photos = "../images/show_placeholder.png";
 

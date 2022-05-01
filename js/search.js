@@ -66,7 +66,7 @@ if (localStorage.getItem("login") == 1) {
 //             if (rating === 0) continue;
 
 //             const photosId = data[i].poster_path;
-//             let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+//             let photos = `https://image.tmdb.org/t/p/original${photosId}`;
 //             if (photosId === null || photosId === undefined)
 //               photos = "../images/show_placeholder.png";
 
@@ -107,7 +107,7 @@ if (localStorage.getItem("login") == 1) {
 //             if (rating === 0) continue;
 
 //             const photosId = data[i].poster_path;
-//             let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+//             let photos = `https://image.tmdb.org/t/p/original${photosId}`;
 //             if (photosId === null || photosId === undefined)
 //               photos = "../images/show_placeholder.png";
 
@@ -154,7 +154,7 @@ if (localStorage.getItem("login") == 1) {
 //                 const rating = data[i].vote_average;
 //                 if (rating === 0) continue;
 //                 const photosId = data[i].poster_path;
-//                 let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+//                 let photos = `https://image.tmdb.org/t/p/original${photosId}`;
 //                 if (photosId === null || photosId === undefined)
 //                     photos = "../images/show_placeholder.png";
 
@@ -177,7 +177,7 @@ if (localStorage.getItem("login") == 1) {
 //                     const rating = data[i].vote_average;
 //                     if (rating === 0) continue;
 //                     const photosId = data[i].poster_path;
-//                     let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+//                     let photos = `https://image.tmdb.org/t/p/original${photosId}`;
 //                     if (photosId === null || photosId === undefined)
 //                         photos = "../images/show_placeholder.png";
 

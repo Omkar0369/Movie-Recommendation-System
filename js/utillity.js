@@ -43,7 +43,7 @@ function getMovie() {
         const movie_name = data.title;
         const rating = data.vote_average;
         const photosId = data.poster_path;
-        let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+        let photos = `https://image.tmdb.org/t/p/original${photosId}`;
         if (photosId === null || photosId === undefined)
           photos = "../images/show_placeholder.png";
         const description = data.overview;
@@ -89,7 +89,7 @@ function getMovie() {
             const cast_name = data.credits.cast[i].name;
             const character_name = data.credits.cast[i].character;
             const photosId = data.credits.cast[i].profile_path;
-            let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+            let photos = `https://image.tmdb.org/t/p/original${photosId}`;
             if (photosId === null || photosId === undefined)
               photos = "../images/show_placeholder.png";
 
@@ -142,7 +142,7 @@ function getMovie() {
           card.classList.add("showCard");
           card.classList.add("col-1");
           card.innerHTML = `
-          <img src="http://image.tmdb.org/t/p/original${allWatchProvider[i].logo_path}" class="card-img-top" alt="..."  style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);width:8vw;">
+          <img src="https://image.tmdb.org/t/p/original${allWatchProvider[i].logo_path}" class="card-img-top" alt="..."  style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);width:8vw;">
           <div class="card-body">
             <h5 class="card-title" style="color:white;overflow-wrap: break-word;">${allWatchProvider[i].provider_name}</h5>
           </div>
@@ -175,7 +175,7 @@ function getwebseries() {
         const webseries_name = data.original_name;
         const rating = data.vote_average;
         const photosId = data.poster_path;
-        let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+        let photos = `https://image.tmdb.org/t/p/original${photosId}`;
         if (photosId === null || photosId === undefined)
           photos = "../images/show_placeholder.png";
         const description = data.overview;
@@ -218,7 +218,7 @@ function getwebseries() {
             const cast_name = data.credits.cast[i].name;
             const character_name = data.credits.cast[i].character;
             const photosId = data.credits.cast[i].profile_path;
-            let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+            let photos = `https://image.tmdb.org/t/p/original${photosId}`;
             if (photosId === null || photosId === undefined)
               photos = "../images/show_placeholder.png";
 
@@ -271,7 +271,7 @@ function getwebseries() {
           card.classList.add("showCard");
           card.classList.add("col-1");
           card.innerHTML = `
-          <img src="http://image.tmdb.org/t/p/original${allWatchProvider[i].logo_path}" class="card-img-top" alt="..."  style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);width:8vw;">
+          <img src="https://image.tmdb.org/t/p/original${allWatchProvider[i].logo_path}" class="card-img-top" alt="..."  style="color:white; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.1);width:8vw;">
           <div class="card-body">
             <h5 class="card-title" style="color:white;overflow-wrap: break-word;">${allWatchProvider[i].provider_name}</h5>
           </div>
@@ -289,7 +289,7 @@ function homeMovieList(data, cardDiv) {
   const rating = data.vote_average;
   if (rating === 0) return;
   const photosId = data.poster_path;
-  let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+  let photos = `https://image.tmdb.org/t/p/original${photosId}`;
   if (photosId === null || photosId === undefined)
     photos = "../images/show_placeholder.png";
 
@@ -311,7 +311,7 @@ function homeWebList(data, cardDiv) {
   const rating = data.vote_average;
   if (rating === 0) return;
   const photosId = data.poster_path;
-  let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+  let photos = `https://image.tmdb.org/t/p/original${photosId}`;
   if (photosId === null || photosId === undefined)
     photos = "../images/show_placeholder.png";
 
@@ -510,7 +510,7 @@ function search_result(value, genre, adult, language, sortby) {
             if (rating === 0) continue;
 
             const photosId = data[i].poster_path;
-            let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+            let photos = `https://image.tmdb.org/t/p/original${photosId}`;
             if (photosId === null || photosId === undefined)
               photos = "../images/show_placeholder.png";
 
@@ -562,7 +562,7 @@ function search_result(value, genre, adult, language, sortby) {
             if (rating === 0) continue;
 
             const photosId = data[i].poster_path;
-            let photos = `http://image.tmdb.org/t/p/original${photosId}`;
+            let photos = `https://image.tmdb.org/t/p/original${photosId}`;
             if (photosId === null || photosId === undefined)
               photos = "../images/show_placeholder.png";
 
