@@ -627,6 +627,7 @@ function sort_result(sortby) {
   console.log(value, genre, language, adult, sortby);
   search_result(value, genre, adult, language, sortby);
 }
+window.sort_result=sort_result;
 
 function sort_data(data, sortby) {
   let sort_by_split = sortby.split(".");
