@@ -71,7 +71,7 @@ $(document).ready(function () {
 
 const f = document.getElementById("form");
 const q = document.getElementById("search_bar");
-const google = "../search.html?search=";
+const google = "/search.html?search=";
 
 function submitted(event) {
   event.preventDefault();
